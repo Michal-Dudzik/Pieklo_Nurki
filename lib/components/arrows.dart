@@ -1,175 +1,236 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+//
+// class ArrowButton extends StatefulWidget {
+//   final IconData icon;
+//   final VoidCallback onPressed;
+//   final double size;
+//   final Color color;
+//   final Color pressedColor;
+//   final Duration animationDuration;
+//
+//   const ArrowButton({
+//     required this.icon,
+//     required this.onPressed,
+//     this.size = 50,
+//     this.color = Colors.grey,
+//     this.pressedColor = Colors.yellow,
+//     this.animationDuration = const Duration(milliseconds: 100),
+//     Key? key,
+//   }) : super(key: key);
+//
+//   @override
+//   _ArrowButtonState createState() => _ArrowButtonState();
+// }
+//
+// class _ArrowButtonState extends State<ArrowButton> {
+//   bool _isPressed = false;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return GestureDetector(
+//       onTapDown: (_) {
+//         setState(() {
+//           _isPressed = true;
+//         });
+//         widget.onPressed();
+//       },
+//       onTapUp: (_) {
+//         setState(() {
+//           _isPressed = false;
+//         });
+//       },
+//       onTapCancel: () {
+//         setState(() {
+//           _isPressed = false;
+//         });
+//       },
+//       child: AnimatedContainer(
+//         duration: widget.animationDuration,
+//         decoration: BoxDecoration(
+//           color: _isPressed ? widget.pressedColor : widget.color,
+//           borderRadius: BorderRadius.circular(8),
+//           border: Border.all(width: 3, color: Colors.black),
+//         ),
+//         child: Center(
+//           child: Icon(
+//             widget.icon,
+//             size: widget.size,
+//             color: _isPressed ? Colors.black : Colors.white,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+//
+// class ArrowPad extends StatefulWidget {
+//   const ArrowPad({Key? key}) : super(key: key);
+//
+//   @override
+//   _ArrowPadState createState() => _ArrowPadState();
+// }
+//
+// class _ArrowPadState extends State<ArrowPad> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: 240,
+//       height: 160,
+//       child: GridView.count(
+//         crossAxisCount: 3,
+//         mainAxisSpacing: 10,
+//         crossAxisSpacing: 10,
+//         children: [
+//           const SizedBox(),
+//           ArrowButton(
+//             icon: Icons.arrow_upward,
+//             onPressed: () => _handleArrowButtonPress('up'),
+//           ),
+//           const SizedBox(),
+//           ArrowButton(
+//             icon: Icons.arrow_back,
+//             onPressed: () => _handleArrowButtonPress('left'),
+//           ),
+//           ArrowButton(
+//             icon: Icons.arrow_downward,
+//             onPressed: () => _handleArrowButtonPress('down'),
+//           ),
+//           ArrowButton(
+//             icon: Icons.arrow_forward,
+//             onPressed: () => _handleArrowButtonPress('right'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   void _handleArrowButtonPress(String direction) {
+//     HapticFeedback.heavyImpact();
+//     print(direction);
+//   }
+// }
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ArrowButton extends StatelessWidget {
+class ArrowButton extends StatefulWidget {
   final IconData icon;
-  final Color color;
   final VoidCallback onPressed;
   final double size;
+  final Color color;
+  final Color pressedColor;
+  final Duration animationDuration;
 
   const ArrowButton({
     required this.icon,
-    required this.color,
     required this.onPressed,
     this.size = 50,
+    this.color = Colors.grey,
+    this.pressedColor = Colors.yellow,
+    this.animationDuration = const Duration(milliseconds: 50),
     Key? key,
   }) : super(key: key);
 
   @override
+  _ArrowButtonState createState() => _ArrowButtonState();
+}
+
+class _ArrowButtonState extends State<ArrowButton> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        icon: Icon(icon, size: size),
-        color: color,
-        onPressed: onPressed,
-        highlightColor: Colors.transparent,
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _isPressed = true;
+        });
+        widget.onPressed();
+      },
+      onTapUp: (_) {
+        setState(() {
+          _isPressed = false;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _isPressed = false;
+        });
+      },
+      child: AnimatedContainer(
+        duration: widget.animationDuration,
+        decoration: BoxDecoration(
+          color: _isPressed ? widget.pressedColor : widget.color,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(width: 3, color: Colors.black),
+        ),
+        child: Center(
+          child: Icon(
+            widget.icon,
+            size: widget.size,
+            color: _isPressed ? Colors.black : Colors.white,
+          ),
+        ),
       ),
     );
   }
 }
 
 class ArrowPad extends StatefulWidget {
-  const ArrowPad({Key? key}) : super(key: key);
+  final void Function(List<String>) onArrowsPressed;
+
+  const ArrowPad({
+    required this.onArrowsPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ArrowPadState createState() => _ArrowPadState();
 }
 
 class _ArrowPadState extends State<ArrowPad> {
-  Color leftArrowColor = Colors.white;
-  Color rightArrowColor = Colors.white;
-  Color upArrowColor = Colors.white;
-  Color downArrowColor = Colors.white;
+  final List<String> _pressedArrows = [];
+
+  void _handleArrowButtonPress(String direction) {
+    setState(() {
+      _pressedArrows.add(direction);
+    });
+    HapticFeedback.heavyImpact();
+    widget.onArrowsPressed(_pressedArrows.toList());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
-      width: 180,
-      height: 180,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      width: 250,
+      height: 175,
+      child: GridView.count(
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-              Expanded(
-                child: Transform.rotate(
-                  angle: -90 * 3.14159 / 180,
-                  child: ArrowButton(
-                    icon: Icons.forward,
-                    color: upArrowColor,
-                    onPressed: () => _handleArrowButtonPress('up'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-            ],
+          const SizedBox(),
+          ArrowButton(
+            icon: Icons.arrow_upward,
+            onPressed: () => _handleArrowButtonPress('up'),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Transform.rotate(
-                  angle: 180 * 3.14159 / 180,
-                  child: ArrowButton(
-                    icon: Icons.forward,
-                    color: leftArrowColor,
-                    onPressed: () => _handleArrowButtonPress('left'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-              Expanded(
-                child: ArrowButton(
-                  icon: Icons.forward,
-                  color: rightArrowColor,
-                  onPressed: () => _handleArrowButtonPress('right'),
-                ),
-              ),
-            ],
+          const SizedBox(),
+          ArrowButton(
+            icon: Icons.arrow_back,
+            onPressed: () => _handleArrowButtonPress('left'),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-              Expanded(
-                child: Transform.rotate(
-                  angle: 180 * 3.14159 / 360,
-                  child: ArrowButton(
-                    icon: Icons.forward,
-                    color: downArrowColor,
-                    onPressed: () => _handleArrowButtonPress('down'),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-            ],
+          ArrowButton(
+            icon: Icons.arrow_downward,
+            onPressed: () => _handleArrowButtonPress('down'),
+          ),
+          ArrowButton(
+            icon: Icons.arrow_forward,
+            onPressed: () => _handleArrowButtonPress('right'),
           ),
         ],
       ),
     );
   }
-
-  void _handleArrowButtonPress(String direction) {
-    HapticFeedback.heavyImpact();
-    setState(() {
-      switch (direction) {
-        case 'left':
-          leftArrowColor = Colors.yellow;
-          break;
-        case 'right':
-          rightArrowColor = Colors.yellow;
-          break;
-        case 'up':
-          upArrowColor = Colors.yellow;
-          break;
-        case 'down':
-          downArrowColor = Colors.yellow;
-          break;
-      }
-    });
-    Future.delayed(Duration(milliseconds: 200), () {
-      setState(() {
-        switch (direction) {
-          case 'left':
-            leftArrowColor = Colors.white;
-            break;
-          case 'right':
-            rightArrowColor = Colors.white;
-            break;
-          case 'up':
-            upArrowColor = Colors.white;
-            break;
-          case 'down':
-            downArrowColor = Colors.white;
-            break;
-        }
-      });
-    });
-  }
 }
+

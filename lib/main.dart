@@ -7,7 +7,7 @@ import 'package:pieklo_nurki/screens/stratagems_screen.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -23,9 +23,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Piekło Nurki',
       theme: ThemeData(
+        fontFamily: 'ChakraPetch',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(),
@@ -87,12 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.pushReplacementNamed(context, '/stratagems_screen');
           },
           child: VideoPlayer(_controller),
-          // child: Center(
-          //   child: AspectRatio(
-          //     aspectRatio: _controller.value.aspectRatio,
-          //     child: VideoPlayer(_controller),
-          //   ),
-          // ),
         ),
       ),
     );

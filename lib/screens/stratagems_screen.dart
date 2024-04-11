@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:expandable_menu/expandable_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pieklo_nurki/components/active_stratagems.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:pieklo_nurki/components/utility.dart';
 
 class StratagemsScreen extends StatefulWidget {
   const StratagemsScreen({Key? key}) : super(key: key);
@@ -12,6 +16,50 @@ class StratagemsScreen extends StatefulWidget {
 }
 
 class _StratagemsScreenState extends State<StratagemsScreen> {
+  List<String> _pressedArrows = [];
+  int _selectedIndex = -1;
+
+  // List<String> svgPaths = [
+  //   'assets/stratagems/Bridge/HMG_Emplacement.svg',
+  //   'assets/stratagems/Bridge/Orbital_EMS_Strike.svg',
+  //   // Add more SVG paths as needed
+  // ];
+  //
+  // List<List<String>> arrowSets = [
+  //   ['up', 'down', 'left'],
+  //   ['right', 'up'],
+  //   // Define arrow sets for each SVG
+  // ];
+
+  List<String> svgPaths = [];
+  List<List<String>> arrowSets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSVGPaths();
+    _loadArrowSets();
+  }
+
+  Future<void> _loadSVGPaths() async {
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    final paths = manifestMap.keys
+        .where((String key) => key.contains('stratagems'))
+        .toList();
+    setState(() {
+      svgPaths = paths;
+    });
+  }
+
+  Future<void> _loadArrowSets() async {
+    List<List<String>> loadedArrowSets =
+    await Utils.readArrowSetsFromFile('assets/stratagemsCombos.txt');
+    setState(() {
+      arrowSets = loadedArrowSets;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,9 +81,9 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                   // First Row: Title and Menu
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildStratagemsTitle(),
-                      _buildExpandableMenu(),
+                    children: const [
+                      _StratagemsTitle(),
+                      _ExpandableMenu(),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -75,14 +123,13 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
             width: double.infinity,
             color: Colors.black.withOpacity(.4),
             child: ActiveStratagems(
-              items: List.generate(
-                5,
-                (index) => CustomListItem(
-                  iconData: Icons.star,
-                  title: 'Stratagem $index',
-                  subtitle: 'Description $index',
-                ),
-              ),
+              svgPaths: svgPaths,
+              arrowSets: arrowSets,
+              onItemSelected: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
             ),
           ),
         ),
@@ -90,7 +137,84 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
     );
   }
 
-  Widget _buildStratagemsTitle() {
+  Widget _buildArrowsSpace() {
+    String selectedSvgPath = _selectedIndex != -1 ? svgPaths[_selectedIndex] : '';
+    String selectedSvgName = _selectedIndex != -1 ? Utils.getTitleFromPath(selectedSvgPath) : '';
+    List<String> selectedArrows = _selectedIndex != -1 ? arrowSets[_selectedIndex] : [];
+
+    return Container(
+      width: double.infinity,
+      color: Colors.black.withOpacity(.4),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                ),
+                child: _selectedIndex != -1
+                    ? Image(
+                  width: 60,
+                  height: 60,
+                  image: Svg(selectedSvgPath),
+                )
+                    : SizedBox(),
+              ),
+              Expanded(
+                child: Container(
+                  height: 60,
+                  color: const Color(0xffffe80a),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        selectedSvgName,
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        Utils.mapDirectionsToArrows(selectedArrows),
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ArrowPad(
+              onArrowsPressed: (arrows) {
+                setState(() {
+                  _pressedArrows = arrows;
+                  print(_pressedArrows);
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StratagemsTitle extends StatelessWidget {
+  const _StratagemsTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: 170,
       height: 50,
@@ -109,51 +233,20 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
-              fontFamily: 'Chakra Petch',
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildArrowsSpace() {
-    return Container(
-      width: double.infinity,
-      color: Colors.black.withOpacity(.4),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              // const Image(
-              //   width: 50,
-              //   height: 50,
-              //   image: Svg(
-              //       'assets/stratagem_icons/Patriotic_Administration_Center/Spear.svg'),
-              // ),
-              Image.asset(
-                'assets/images/logo.jpeg',
-                width: 50,
-                height: 50,
-              ),
-              Container(
-                width: 470,
-                height: 50,
-                color: Colors.yellow,
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
-          ArrowPad(),
-        ],
-      ),
-    );
-  }
+class _ExpandableMenu extends StatelessWidget {
+  const _ExpandableMenu({Key? key}) : super(key: key);
 
-  Widget _buildExpandableMenu() {
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: 200,
       height: 50,

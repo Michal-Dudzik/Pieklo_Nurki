@@ -46,15 +46,19 @@ class _CompanionScreenState extends State<CompanionScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
-                  alignment: Alignment.topLeft,
-                  child: CircleAvatar(
-                    radius: 22.0,
-                    backgroundColor: Colors.black,
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 40.0, // Adjust width as needed
+                    height: 120.0, // Adjust height as needed
+                    decoration: BoxDecoration(
+                      color: Color(0xffffe80a),
+                      borderRadius: BorderRadius.circular(10.0), // Adjust the border radius for rounded corners
+                    ),
                     child: IconButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      color: Colors.yellow,
+                      color: Colors.black,
                       icon: Icon(Icons.arrow_back),
                     ),
                   ),
