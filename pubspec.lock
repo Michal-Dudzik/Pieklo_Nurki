@@ -232,6 +232,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  scrollable:
+    dependency: "direct main"
+    description:
+      name: scrollable
+      sha256: "97a6916e4ab7cf0153b3cc46b3be555a13b507283b97eddbadebb284773475f8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.5"
   sky_engine:
     dependency: transitive
     description: flutter

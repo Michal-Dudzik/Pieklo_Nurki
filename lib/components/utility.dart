@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Utils {
@@ -43,26 +42,42 @@ class Utils {
     return svgPaths;
   }
 
-  // static List<List<String>> initializeArrowSets(int length) {
-  //   List<List<String>> arrowSets = [];
-  //   for (int i = 0; i < length; i++) {
-  //     arrowSets.add([]);
-  //   }
-  //   return arrowSets;
-  // }
-
-  static Future<List<List<String>>> readArrowSetsFromFile(String filePath) async {
+  static Future<List<String>> loadSVGPaths() async {
     try {
-      File file = File(filePath);
-      List<String> lines = await file.readAsLines();
-      List<List<String>> arrowSets = [];
-      for (String line in lines) {
-        arrowSets.add(line.split(','));
+      List<String> svgPaths = [];
+      final manifestContent = await rootBundle.loadString('AssetManifest.json');
+      final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+      for (String key in manifestMap.keys) {
+        if (key.startsWith('assets/stratagems/') && key.endsWith('.svg')) {
+          svgPaths.add(key);
+        }
       }
+      return svgPaths;
+    } catch (e) {
+      print("Error loading SVG paths: $e");
+      throw Exception("Failed to load SVG paths: $e");
+    }
+  }
+
+  static Future<Map<String, List<String>>> loadArrowSets() async {
+    try {
+      String filePath = 'assets/stratagemsCombos.txt';
+      String fileContent = await rootBundle.loadString(filePath);
+      List<String> lines = fileContent.split('\n');
+      Map<String, List<String>> arrowSets = {};
+      for (String line in lines) {
+        List<String> parts = line.split(',').map((part) => part.trim()).toList();
+        if (parts.isNotEmpty) {
+          String stratagemName = parts[0];
+          List<String> arrows = parts.sublist(1);
+          arrowSets[stratagemName] = arrows;
+        }
+      }
+      print("Loaded SVG paths: $arrowSets");
       return arrowSets;
     } catch (e) {
       print("Error reading arrow sets file: $e");
-      return [];
+      throw Exception("Failed to load arrow sets: $e");
     }
   }
 

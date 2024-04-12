@@ -15,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   expandable_menu: ^0.0.5
   flutter_svg_provider: ^1.0.7
+  scrollable: ^1.0.5
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,7 @@ flutter:
     - assets/stratagems/Orbital_Cannons/
     - assets/stratagems/Patriotic_Administration_Center/
     - assets/stratagems/Robotics_Workshop/
+    - assets/stratagemsCombos.txt
     - assets/images/
     - assets/intro_cropped.mp4
     - assets/fonts/Quicksand/

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pieklo_nurki/components/utility.dart';
+import 'package:scrollable/exports.dart';
 
 class ActiveStratagems extends StatefulWidget {
   final List<String> svgPaths;
-  final List<List<String>> arrowSets;
+  final Map<String, List<String>> arrowSets; // Updated to use a map
   final ValueChanged<int>? onItemSelected;
 
   const ActiveStratagems({
@@ -23,27 +25,40 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: widget.svgPaths.length,
-      itemBuilder: (BuildContext context, int index) {
-        return SelectableItem(
-          index: index,
-          svgPath: widget.svgPaths[index],
-          arrows: widget.arrowSets[index],
-          isSelected: _selectedIndex == index,
-          onTap: () {
-            setState(() {
-              _selectedIndex = index;
-            });
-            if (widget.onItemSelected != null) {
-              widget.onItemSelected!(index);
-            }
-          },
-        );
-      },
+    return ScrollHaptics(
+
+      child: ListView.builder(
+        itemCount: widget.svgPaths.length,
+        itemBuilder: (BuildContext context, int index) {
+          final stratagemName = Utils.getTitleFromPath(widget.svgPaths[index]);
+          final arrowSet = widget.arrowSets[stratagemName]; // Access arrow set using the stratagem name
+
+          if (arrowSet == null) {
+            print('Arrow set not found for $stratagemName');
+            return Container();
+          }
+
+          return SelectableItem(
+            index: index,
+            svgPath: widget.svgPaths[index],
+            arrows: arrowSet, // Pass the arrow set to the SelectableItem widget
+            isSelected: _selectedIndex == index,
+            onTap: () {
+              HapticFeedback.heavyImpact();
+              setState(() {
+                _selectedIndex = index;
+              });
+              if (widget.onItemSelected != null) {
+                widget.onItemSelected!(index);
+              }
+            },
+          );
+        },
+      ),
     );
   }
 }
+
 
 class SelectableItem extends StatelessWidget {
   final int index;
@@ -79,7 +94,7 @@ class SelectableItem extends StatelessWidget {
                 // height: 40,
               ),
             ),
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,34 +122,4 @@ class SelectableItem extends StatelessWidget {
       ),
     );
   }
-  // String _getTitleFromPath(String path) {
-    //   String fileName = path.split('/').last;
-    //   String title = fileName.replaceAll('.svg', '');
-    //   title = title.replaceAll('_', ' ');
-    //   return title;
-    // }
-    //
-    // String _getSubtitle(List<String> arrows) {
-    //   List<String> arrowStrings = [];
-    //   for (String arrow in arrows) {
-    //     switch (arrow) {
-    //       case 'up':
-    //         arrowStrings.add('↑');
-    //         break;
-    //       case 'down':
-    //         arrowStrings.add('↓');
-    //         break;
-    //       case 'left':
-    //         arrowStrings.add('←');
-    //         break;
-    //       case 'right':
-    //         arrowStrings.add('→');
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   }
-    //   return arrowStrings.join(' ');
-    // }
-
 }
