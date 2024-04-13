@@ -5,14 +5,12 @@ import 'package:pieklo_nurki/components/utility.dart';
 import 'package:scrollable/exports.dart';
 
 class ActiveStratagems extends StatefulWidget {
-  final List<String> svgPaths;
-  final Map<String, List<String>> arrowSets; // Updated to use a map
+  final List<Stratagem> stratagems;
   final ValueChanged<int>? onItemSelected;
 
   const ActiveStratagems({
     Key? key,
-    required this.svgPaths,
-    required this.arrowSets,
+    required this.stratagems,
     this.onItemSelected,
   }) : super(key: key);
 
@@ -28,20 +26,15 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
     return ScrollHaptics(
 
       child: ListView.builder(
-        itemCount: widget.svgPaths.length,
+        itemCount: widget.stratagems.length,
         itemBuilder: (BuildContext context, int index) {
-          final stratagemName = Utils.getTitleFromPath(widget.svgPaths[index]);
-          final arrowSet = widget.arrowSets[stratagemName]; // Access arrow set using the stratagem name
-
-          if (arrowSet == null) {
-            print('Arrow set not found for $stratagemName');
-            return Container();
-          }
+          final stratagem = widget.stratagems[index];
 
           return SelectableItem(
             index: index,
-            svgPath: widget.svgPaths[index],
-            arrows: arrowSet, // Pass the arrow set to the SelectableItem widget
+            name: stratagem.name,
+            svgPath: stratagem.svgPath,
+            arrows: stratagem.arrowSet,
             isSelected: _selectedIndex == index,
             onTap: () {
               HapticFeedback.heavyImpact();
@@ -62,6 +55,7 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
 
 class SelectableItem extends StatelessWidget {
   final int index;
+  final String name;
   final String svgPath;
   final List<String> arrows;
   final bool isSelected;
@@ -70,6 +64,7 @@ class SelectableItem extends StatelessWidget {
   const SelectableItem({
     Key? key,
     required this.index,
+    required this.name,
     required this.svgPath,
     required this.arrows,
     required this.isSelected,
@@ -90,8 +85,6 @@ class SelectableItem extends StatelessWidget {
               color: Colors.black,
               child: SvgPicture.asset(
                 svgPath,
-                // width: 40,
-                // height: 40,
               ),
             ),
             const SizedBox(width: 5),
@@ -100,8 +93,8 @@ class SelectableItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Utils.getTitleFromPath(svgPath),
-                  style: TextStyle(
+                  name,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -109,7 +102,7 @@ class SelectableItem extends StatelessWidget {
                 ),
                 Text(
                   Utils.mapDirectionsToArrows(arrows),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,

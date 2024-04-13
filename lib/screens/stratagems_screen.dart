@@ -1,11 +1,13 @@
+import 'dart:async';
+import 'dart:collection';
 import 'dart:ui';
-import 'package:expandable_menu/expandable_menu.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:pieklo_nurki/components/CountDownTimer.dart';
 import 'package:pieklo_nurki/components/active_stratagems.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:pieklo_nurki/components/menu.dart';
+import 'package:pieklo_nurki/components/tips.dart';
 import 'package:pieklo_nurki/components/utility.dart';
 
 class StratagemsScreen extends StatefulWidget {
@@ -16,10 +18,11 @@ class StratagemsScreen extends StatefulWidget {
 }
 
 class _StratagemsScreenState extends State<StratagemsScreen> {
-  List<String> _pressedArrows = [];
   int _selectedIndex = -1;
-  List<String> svgPaths = [];
-  Map<String, List<String>> arrowSets = {};
+  List<Stratagem> stratagems = [];
+  Queue<String> _pressedArrowsQueue = Queue<String>();
+  int streak = 0;
+  bool successfulCall = false;
 
   @override
   void initState() {
@@ -28,13 +31,12 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
   }
 
   Future<void> _initializeData() async {
-    List<String> loadedSVGPaths = await Utils.loadSVGPaths();
-    Map<String, List<String>> loadedArrowSets = await Utils.loadArrowSets();
+    List<Stratagem> loadedStratagems = await Utils.loadStratagems();
     setState(() {
-      svgPaths = loadedSVGPaths;
-      arrowSets = loadedArrowSets;
+      stratagems = loadedStratagems;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +57,13 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
               child: Column(
                 children: [
                   // First Row: Title and Menu
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
                       _StratagemsTitle(),
-                      _Tips(),
-                      _ExpandableMenu(),
+                      const SizedBox(width: 10),
+                      Tips(),
+                      const SizedBox(width: 60),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -84,6 +87,11 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                 ],
               ),
             ),
+            const Positioned(
+              top: 10, 
+              right: 10,
+              child: Menu(),
+            ),
           ],
         ),
       ),
@@ -103,11 +111,11 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                 width: double.infinity,
                 color: Colors.black.withOpacity(.4),
                 child: ActiveStratagems(
-                  svgPaths: svgPaths,
-                  arrowSets: arrowSets,
+                  stratagems: stratagems,
                   onItemSelected: (index) {
                     setState(() {
                       _selectedIndex = index;
+                      successfulCall = false;
                     });
                   },
                 ),
@@ -120,11 +128,27 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
   }
 
   Widget _buildArrowsSpace() {
-    String selectedSvgPath = _selectedIndex != -1 ? svgPaths[_selectedIndex] : '';
-    String selectedSvgName = _selectedIndex != -1 ? Utils.getTitleFromPath(selectedSvgPath) : '';
-    List<String>? selectedArrows = _selectedIndex != -1 ? arrowSets[_selectedIndex] : null;
+    String selectedSvgPath = _selectedIndex != -1 ? stratagems[_selectedIndex].svgPath : '';
+    String selectedSvgName = _selectedIndex != -1 ? stratagems[_selectedIndex].name : '';
+    List<String>? selectedArrows = _selectedIndex != -1 ? stratagems[_selectedIndex].arrowSet : [];
 
-    selectedArrows ??= [];
+    bool checkArrowSequence(List<String> pressedArrows, List<String>? selectedArrows) {
+      if (selectedArrows == null || selectedArrows.isEmpty) {
+        return false;
+      }
+
+      if (pressedArrows.last == selectedArrows[streak]) {
+        streak++;
+        if (streak == selectedArrows.length) {
+          streak = 0;
+          successfulCall = true;
+        }
+        return true;
+      } else {
+        streak = 0;
+        return false;
+      }
+    }
 
     return ClipRect(
       child: BackdropFilter(
@@ -152,24 +176,33 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                         : SizedBox(),
                   ),
                   Expanded(
-                    child: Container(
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
                       height: 60,
-                      color: const Color(0xffffe80a),
+                      color: successfulCall ? const Color(0xffffe80a) : Colors.black.withOpacity(.4),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            selectedSvgName,
-                            style: const TextStyle(
-                              color: Colors.black,
+                            successfulCall ? 'ACTIVATING' : selectedSvgName,
+                            style:  TextStyle(
+                              color: successfulCall ? Colors.black : Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            Utils.mapDirectionsToArrows(selectedArrows!),
-                            style: const TextStyle(
+                          successfulCall ? CountdownTimer(
+                            successfulCall: true,
+                            onCountdownComplete: () {
+                              setState(() {
+                                successfulCall = false;
+                              });
+                            },
+                          ) : Text(
+                            Utils.mapDirectionsToArrows(selectedArrows),
+                            style: TextStyle(
+                              color: successfulCall ? Colors.black : Colors.white,
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
                             ),
@@ -185,50 +218,17 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                 child: ArrowPad(
                   onArrowsPressed: (arrows) {
                     setState(() {
-                      _pressedArrows = arrows;
-                      print(_pressedArrows);
+                      _pressedArrowsQueue.add(arrows.last);
+
+                      if (_pressedArrowsQueue.length > 10) {
+                        _pressedArrowsQueue.removeFirst();
+                      }
+
+                      List<String> pressedArrows = _pressedArrowsQueue.toList();
+
+                      checkArrowSequence(pressedArrows, selectedArrows);
                     });
                   },
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _Tips extends StatelessWidget {
-  const _Tips({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRect(
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-        child: Container(
-          width: 400,
-          height: 50,
-          color: Colors.black.withOpacity(.4),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'TIPS:',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(width: 5),
-              Text(
-                "Friendly fire isn't",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
                 ),
               ),
             ],
@@ -277,44 +277,3 @@ class _StratagemsTitle extends StatelessWidget {
   }
 }
 
-class _ExpandableMenu extends StatelessWidget {
-  const _ExpandableMenu({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 50,
-      child: ExpandableMenu(
-        width: 50.0,
-        height: 50.0,
-        backgroundColor: Colors.black.withOpacity(.4),
-        iconColor: Colors.white,
-        itemContainerColor: Colors.black,
-        items: [
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              // Navigator.pushNamed(context, '/settings_screen');
-            },
-            icon: Icon(Icons.settings, color: Colors.white),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              // Navigator.pushNamed(context, '/stratagems_selection_screen');
-            },
-            icon: Icon(Icons.select_all, color: Colors.white),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              Navigator.pushNamed(context, '/companion_screen');
-            },
-            icon: Icon(Icons.home, color: Colors.white),
-          ),
-        ],
-      ),
-    );
-  }
-}

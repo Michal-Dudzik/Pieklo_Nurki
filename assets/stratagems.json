@@ -1,0 +1,297 @@
+[
+  {
+    "name": "Reinforce",
+    "arrowSet": ["Up", "Down", "Right", "Left", "Up"],
+    "svgPath": "assets/stratagems/General_Stratagems/Reinforce.svg"
+  },
+  {
+    "name": "SOS Beacon",
+    "arrowSet": ["Up", "Down", "Right", "Up"],
+    "svgPath": "assets/stratagems/General_Stratagems/SOS_Beacon.svg"
+  },
+  {
+    "name": "Resupply",
+    "arrowSet": ["Down", "Down", "Up", "Right"],
+    "svgPath": "assets/stratagems/General_Stratagems/Resupply.svg"
+  },
+  {
+    "name": "SEAF Artillery",
+    "arrowSet": ["Left", "Up", "Up", "Down"],
+    "svgPath": "assets/stratagems/General_Stratagems/SEAF_Artillery.svg"
+  },
+  {
+    "name": "Upload Data",
+    "arrowSet": ["Left", "Right", "Up", "Up", "Up"],
+    "svgPath": "assets/stratagems/General_Stratagems/Upload_Data.svg"
+  },
+  {
+    "name": "Hellbomb",
+    "arrowSet": ["Up", "Down", "Left", "Down", "Up", "Right", "Down", "Up"],
+    "svgPath": "assets/stratagems/General_Stratagems/Hellbomb.svg"
+  },
+  {
+    "name": "Seismic Probe",
+    "arrowSet": ["Up", "Up", "Left", "Right", "Down", "Down"],
+    "svgPath": "assets/stratagems/General_Stratagems/Seismic_Probe.svg"
+  },
+  {
+    "name": "Prospecting Drill",
+    "arrowSet": ["Down", "Down", "Left", "Right", "Down", "Down"],
+    "svgPath": "assets/stratagems/General_Stratagems/Prospecting_Drill.svg"
+  },
+  {
+    "name": "Super Earth Flag",
+    "arrowSet": ["Down", "Up", "Down", "Up"],
+    "svgPath": "assets/stratagems/General_Stratagems/Super_Earth_Flag.svg"
+  },
+  {
+    "name": "Machine Gun",
+    "arrowSet": ["Down", "Left", "Down", "Up", "Right"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Machine_Gun.svg"
+  },
+  {
+    "name": "Anti-Material Rifle",
+    "arrowSet": ["Down", "Left", "Right", "Up", "Down"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Anti_Material_Rifle.svg"
+  },
+  {
+    "name": "Stalwart",
+    "arrowSet": ["Down", "Left", "Down", "Up", "Up", "Left"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Stalwart.svg"
+  },
+  {
+    "name": "Expendable Anti-Tank",
+    "arrowSet": ["Down", "Down", "Left", "Up", "Right"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Expendable_Anti_Tank.svg"
+  },
+  {
+    "name": "Recoilless Rifle",
+    "arrowSet": ["Down", "Left", "Right", "Right", "Left"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Recoilless_Rifle.svg"
+  },
+  {
+    "name": "Flamethrower",
+    "arrowSet": ["Down", "Left", "Up", "Down", "Up"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Flamethrower.svg"
+  },
+  {
+    "name": "Autocannon",
+    "arrowSet": ["Down", "Left", "Down", "Up", "Up", "Right"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Autocannon.svg"
+  },
+  {
+    "name": "Heavy Machine Gun",
+    "arrowSet": ["Down", "Left", "Up", "Down", "Down"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Heavy_Machine_Gun.svg"
+  },
+  {
+    "name": "Railgun",
+    "arrowSet": ["Down", "Right", "Left", "Down", "Up", "Left", "Right"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Railgun.svg"
+  },
+  {
+    "name": "Spear",
+    "arrowSet": ["Down", "Down", "Up", "Down", "Down"],
+    "svgPath": "assets/stratagems/Patriotic_Administration_Center/Spear.svg"
+  },
+  {
+    "name": "Orbital Gatling Barrage",
+    "arrowSet": ["Right", "Down", "Left", "Up", "Up"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_Gatling_Barrage.svg"
+  },
+  {
+    "name": "Orbital Airburst Strike",
+    "arrowSet": ["Right", "Right", "Right"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_Airburst_Strike.svg"
+  },
+  {
+    "name": "Orbital 120MM HE Barrage",
+    "arrowSet": ["Right", "Down", "Left", "Right", "Down"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_120MM_HE_Barrage.svg"
+  },
+  {
+    "name": "Orbital 380MM HE Barrage",
+    "arrowSet": ["Right", "Down", "Up", "Up", "Left", "Down", "Down"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_380MM_HE_Barrage.svg"
+  },
+  {
+    "name": "Orbital Walking Barrage",
+    "arrowSet": ["Right", "Right", "Down", "Left", "Right", "Down"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_Walking_Barrage.svg"
+  },
+  {
+    "name": "Orbital Laser",
+    "arrowSet": ["Right", "Down", "Up", "Right", "Down"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_Laser.svg"
+  },
+  {
+    "name": "Orbital Railcannon Strike",
+    "arrowSet": ["Right", "Up", "Down", "Down", "Right"],
+    "svgPath": "assets/stratagems/Orbital_Cannons/Orbital_Railcannon_Strike.svg"
+  },
+  {
+    "name": "Eagle Strafing Run",
+    "arrowSet": ["Up", "Right", "Right"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_Strafing_Run.svg"
+  },
+  {
+    "name": "Eagle Airstrike",
+    "arrowSet": ["Up", "Right", "Down", "Right"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_Airstrike.svg"
+  },
+  {
+    "name": "Eagle Cluster Bomb",
+    "arrowSet": ["Up", "Right", "Down", "Down", "Right"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_Cluster_Bomb.svg"
+  },
+  {
+    "name": "Eagle Napalm Airstrike",
+    "arrowSet": ["Up", "Right", "Down", "Up"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_Napalm_Airstrike.svg"
+  },
+  {
+    "name": "Jump Pack",
+    "arrowSet": ["Down", "Up", "Up", "Down", "Up"],
+    "svgPath": "assets/stratagems/Hangar/Jump_Pack.svg"
+  },
+  {
+    "name": "Eagle Smoke Strike",
+    "arrowSet": ["Up", "Right", "Up", "Down"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_Smoke_Strike.svg"
+  },
+  {
+    "name": "Eagle 110MM Rocket Pods",
+    "arrowSet": ["Up", "Right", "Up", "Left"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_110MM_Rocket_Pods.svg"
+  },
+  {
+    "name": "Eagle 500KG Bomb",
+    "arrowSet": ["Up", "Right", "Down", "Down", "Down"],
+    "svgPath": "assets/stratagems/Hangar/Eagle_500KG_Bomb.svg"
+  },
+  {
+    "name": "Orbital Precision Strike",
+    "arrowSet": ["Right", "Right", "Up"],
+    "svgPath": "assets/stratagems/Bridge/Orbital_Precision_Strike.svg"
+  },
+  {
+    "name": "Orbital Gas Strike",
+    "arrowSet": ["Right", "Right", "Down", "Right"],
+    "svgPath": "assets/stratagems/Bridge/Orbital_Gas_Strike.svg"
+  },
+  {
+    "name": "Orbital EMS Strike",
+    "arrowSet": ["Right", "Right", "Left", "Down"],
+    "svgPath": "assets/stratagems/Bridge/Orbital_EMS_Strike.svg"
+  },
+  {
+    "name": "Orbital Smoke Strike",
+    "arrowSet": ["Right", "Right", "Down", "Up"],
+    "svgPath": "assets/stratagems/Bridge/Orbital_Smoke_Strike.svg"
+  },
+  {
+    "name": "HMG Emplacement",
+    "arrowSet": ["Down", "Up", "Left", "Right", "Right", "Left"],
+    "svgPath": "assets/stratagems/Bridge/HMG_Emplacement.svg"
+  },
+  {
+    "name": "Shield Generator Relay",
+    "arrowSet": ["Down", "Up", "Left", "Down", "Right", "Right"],
+    "svgPath": "assets/stratagems/Bridge/Shield_Generator_Relay.svg"
+  },
+  {
+    "name": "Tesla Tower",
+    "arrowSet": ["Down", "Up", "Right", "Up", "Left", "Right"],
+    "svgPath": "assets/stratagems/Bridge/Tesla_Tower.svg"
+  },
+  {
+    "name": "Anti-Personnel Minefield",
+    "arrowSet": ["Down", "Left", "Up", "Right"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Anti_Personnel_Minefield.svg"
+  },
+  {
+    "name": "Supply Pack",
+    "arrowSet": ["Down", "Left", "Down", "Up", "Up", "Down"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Supply_Pack.svg"
+  },
+  {
+    "name": "Grenade Launcher",
+    "arrowSet": ["Down", "Left", "Up", "Left", "Down"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Grenade_Launcher.svg"
+  },
+  {
+    "name": "Laser Cannon",
+    "arrowSet": ["Down", "Left", "Down", "Up", "Left"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Laser_Cannon.svg"
+  },
+  {
+    "name": "Incendiary Mines",
+    "arrowSet": ["Down", "Left", "Left", "Down"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Incendiary_Mines.svg"
+  },
+  {
+    "name": "Guard Dog Rover",
+    "arrowSet": ["Down", "Up", "Left", "Up", "Right", "Right"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Guard_Dog_Rover.svg"
+  },
+  {
+    "name": "Ballistic Shield Backpack",
+    "arrowSet": ["Down", "Left", "Up", "Up", "Right"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Ballistic_Shield_Backpack.svg"
+  },
+  {
+    "name": "Arc Thrower",
+    "arrowSet": ["Down", "Right", "Up", "Left", "Down"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Arc_Thrower.svg"
+  },
+  {
+    "name": "Quasar Cannon",
+    "arrowSet": ["Down", "Up", "Left", "Right", "Left", "Right"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Quasar_Cannon.svg"
+  },
+  {
+    "name": "Shield Generator Pack",
+    "arrowSet": ["Down", "Up", "Left", "Right", "Left", "Right"],
+    "svgPath": "assets/stratagems/Engineering_Bay/Shield_Generator_Pack.svg"
+  },
+  {
+    "name": "Machine Gun Sentry",
+    "arrowSet": ["Down", "Up", "Right", "Right", "Up"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Machine_Gun_Sentry.svg"
+  },
+  {
+    "name": "Gatling Sentry",
+    "arrowSet": ["Down", "Up", "Right", "Left"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Gatling_Sentry.svg"
+  },
+  {
+    "name": "Mortar Sentry",
+    "arrowSet": ["Down", "Up", "Right", "Right", "Down"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Mortar_Sentry.svg"
+  },
+  {
+    "name": "Guard Dog",
+    "arrowSet": ["Down", "Up", "Left", "Up", "Right", "Down"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Guard_Dog.svg"
+  },
+  {
+    "name": "Autocannon Sentry",
+    "arrowSet": ["Down", "Up", "Right", "Up", "Left", "Up"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Autocannon_Sentry.svg"
+  },
+  {
+    "name": "Rocket Sentry",
+    "arrowSet": ["Down", "Up", "Right", "Right", "Left"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Rocket_Sentry.svg"
+  },
+  {
+    "name": "EMS Mortar Sentry",
+    "arrowSet": ["Down", "Down", "Up", "Up", "Left"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/EMS_Mortar_Sentry.svg"
+  },
+  {
+    "name": "Patriot Exosuit",
+    "arrowSet": ["Left", "Down", "Right", "Up", "Left", "Down", "Down"],
+    "svgPath": "assets/stratagems/Robotics_Workshop/Patriot_Exosuit.svg"
+  }
+]
