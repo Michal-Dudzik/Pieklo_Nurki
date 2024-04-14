@@ -31,7 +31,7 @@ class Tips extends StatelessWidget {
             height: 50,
             color: Colors.black.withOpacity(.4),
             child: Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +44,7 @@ class Tips extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Expanded(
                     child: MarqueeText(
                       text: TextSpan(

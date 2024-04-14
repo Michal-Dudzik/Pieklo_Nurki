@@ -57,7 +57,7 @@ class _CompanionScreenState extends State<CompanionScreen> {
                     width: 40.0, // Adjust width as needed
                     height: 120.0, // Adjust height as needed
                     decoration: BoxDecoration(
-                      color: Color(0xffffe80a),
+                      color: const Color(0xffffe80a),
                       borderRadius: BorderRadius.circular(10.0), // Adjust the border radius for rounded corners
                     ),
                     child: IconButton(
@@ -65,7 +65,7 @@ class _CompanionScreenState extends State<CompanionScreen> {
                         Navigator.pop(context);
                       },
                       color: Colors.black,
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                     ),
                   ),
                 ),

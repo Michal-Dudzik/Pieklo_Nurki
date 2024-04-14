@@ -17,17 +17,17 @@ class Menu extends StatelessWidget {
         height: 50.0,
         backgroundColor: Colors.black.withOpacity(.4),
         iconColor: Colors.white,
-        itemContainerColor: Color(0xffffe80a),
+        itemContainerColor: const Color(0xffffe80a),
         items: [
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: () {
               // Navigator.pushNamed(context, '/settings_screen');
             },
-            icon: Icon(Icons.settings, color: Colors.black),
+            icon: const Icon(Icons.settings, color: Colors.black),
           ),
           IconButton(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             onPressed: () {
               // Navigator.pushNamed(context, '/stratagems_selection_screen');
             },
@@ -38,7 +38,7 @@ class Menu extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/companion_screen');
             },
-            icon: Icon(Icons.token, color: Colors.black),
+            icon: const Icon(Icons.token, color: Colors.black),
           ),
         ],
       ),

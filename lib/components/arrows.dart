@@ -92,7 +92,7 @@ class _ArrowPadState extends State<ArrowPad> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 250,
       height: 175,
       child: GridView.count(

@@ -17,6 +17,7 @@ dependencies:
   scrollable: ^1.0.5
   marquee_text: ^2.5.0+1
 
+  flutter_svg: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

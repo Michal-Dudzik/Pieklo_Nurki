@@ -17,7 +17,6 @@ class Utils {
 
       return stratagems;
     } catch (e) {
-      print("Error reading stratagems file: $e");
       throw Exception("Failed to load stratagems: $e");
     }
   }
@@ -26,7 +25,7 @@ class Utils {
     List<Widget> arrowWidgets = [];
     for (int i = 0; i < directions.length; i++) {
       String arrow = directions[i];
-      Color color = i < streak ? Color(0xffffe80a): Colors.white;
+      Color color = i < streak ? const Color(0xffffe80a): Colors.white;
       switch (arrow) {
         case 'Up':
           arrowWidgets.add(Text(

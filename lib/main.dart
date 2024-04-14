@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _controller.addListener(() {
       if (_controller.value.isPlaying) {
         if (_controller.value.position >= _controller.value.duration ||
-            _controller.value.position >= Duration(seconds: 31)) {
+            _controller.value.position >= const Duration(seconds: 31)) {
           Navigator.pushReplacementNamed(context, '/stratagems_screen');
         }
       }

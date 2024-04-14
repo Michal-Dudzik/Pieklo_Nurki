@@ -47,7 +47,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   Widget build(BuildContext context) {
     return Text(
       '$_counter',
-      style: TextStyle(fontSize: 40),
+      style: const TextStyle(fontSize: 40),
     );
   }
 }

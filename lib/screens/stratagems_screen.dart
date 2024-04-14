@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:pieklo_nurki/components/CountDownTimer.dart';
+import 'package:pieklo_nurki/components/countdown_timer.dart';
 import 'package:pieklo_nurki/components/active_stratagems.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -20,7 +20,7 @@ class StratagemsScreen extends StatefulWidget {
 class _StratagemsScreenState extends State<StratagemsScreen> {
   int _selectedIndex = -1;
   List<Stratagem> stratagems = [];
-  Queue<String> _pressedArrowsQueue = Queue<String>();
+  final Queue<String> _pressedArrowsQueue = Queue<String>();
   int streak = 0;
   bool successfulCall = false;
 
@@ -59,7 +59,7 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                    Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _StratagemsTitle(),
+                      const _StratagemsTitle(),
                       const SizedBox(width: 10),
                       Tips(),
                       const SizedBox(width: 60),
@@ -172,7 +172,7 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                       height: 60,
                       image: Svg(selectedSvgPath),
                     )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ),
                   Expanded(
                     child: AnimatedContainer(
