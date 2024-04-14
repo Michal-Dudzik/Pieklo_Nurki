@@ -56,7 +56,6 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  // First Row: Title and Menu
                    Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -67,7 +66,6 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  // Second Row: Stratagems list and Arrows
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -111,6 +109,7 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                 width: double.infinity,
                 color: Colors.black.withOpacity(.4),
                 child: ActiveStratagems(
+                  streak: 0,
                   stratagems: stratagems,
                   onItemSelected: (index) {
                     setState(() {
@@ -199,13 +198,8 @@ class _StratagemsScreenState extends State<StratagemsScreen> {
                                 successfulCall = false;
                               });
                             },
-                          ) : Text(
-                            Utils.mapDirectionsToArrows(selectedArrows),
-                            style: TextStyle(
-                              color: successfulCall ? Colors.black : Colors.white,
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          ) : Row(
+                            children: Utils.mapDirectionsToArrows(selectedArrows, streak),
                           ),
                         ],
                       ),

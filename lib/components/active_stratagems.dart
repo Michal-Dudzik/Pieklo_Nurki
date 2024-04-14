@@ -7,11 +7,13 @@ import 'package:scrollable/exports.dart';
 class ActiveStratagems extends StatefulWidget {
   final List<Stratagem> stratagems;
   final ValueChanged<int>? onItemSelected;
+  final int streak;
 
   const ActiveStratagems({
     Key? key,
     required this.stratagems,
     this.onItemSelected,
+    required this.streak,
   }) : super(key: key);
 
   @override
@@ -24,17 +26,18 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
   @override
   Widget build(BuildContext context) {
     return ScrollHaptics(
-
       child: ListView.builder(
         itemCount: widget.stratagems.length,
         itemBuilder: (BuildContext context, int index) {
           final stratagem = widget.stratagems[index];
 
+          List<Widget> arrowWidgets = Utils.mapDirectionsToArrows(stratagem.arrowSet, widget.streak);
+
           return SelectableItem(
             index: index,
             name: stratagem.name,
             svgPath: stratagem.svgPath,
-            arrows: stratagem.arrowSet,
+            arrows: arrowWidgets,
             isSelected: _selectedIndex == index,
             onTap: () {
               HapticFeedback.heavyImpact();
@@ -45,6 +48,7 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
                 widget.onItemSelected!(index);
               }
             },
+            streak: widget.streak,
           );
         },
       ),
@@ -53,13 +57,15 @@ class _ActiveStratagemsState extends State<ActiveStratagems> {
 }
 
 
+
 class SelectableItem extends StatelessWidget {
   final int index;
   final String name;
   final String svgPath;
-  final List<String> arrows;
+  final List<Widget> arrows;
   final bool isSelected;
   final VoidCallback onTap;
+  final int streak;
 
   const SelectableItem({
     Key? key,
@@ -69,6 +75,7 @@ class SelectableItem extends StatelessWidget {
     required this.arrows,
     required this.isSelected,
     required this.onTap,
+    required this.streak,
   }) : super(key: key);
 
   @override
@@ -100,13 +107,8 @@ class SelectableItem extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Text(
-                  Utils.mapDirectionsToArrows(arrows),
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                Row(
+                  children: arrows,
                 ),
               ],
             ),
@@ -116,3 +118,4 @@ class SelectableItem extends StatelessWidget {
     );
   }
 }
+

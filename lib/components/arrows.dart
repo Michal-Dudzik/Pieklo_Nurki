@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ArrowButton extends StatefulWidget {
-  final IconData icon;
+  final String text; // Change IconData to String for arrow text
   final VoidCallback onPressed;
   final double size;
   final Color color;
@@ -10,7 +10,7 @@ class ArrowButton extends StatefulWidget {
   final Duration animationDuration;
 
   const ArrowButton({
-    required this.icon,
+    required this.text,
     required this.onPressed,
     this.size = 50,
     this.color = Colors.grey,
@@ -53,10 +53,13 @@ class _ArrowButtonState extends State<ArrowButton> {
           border: Border.all(width: 3, color: Colors.black),
         ),
         child: Center(
-          child: Icon(
-            widget.icon,
-            size: widget.size,
-            color: _isPressed ? Colors.black : Colors.white,
+          child: Text(
+            widget.text,
+            style: TextStyle(
+              fontFamily: 'Symbola',
+              fontSize: widget.size, // Adjust size if needed
+              color: _isPressed ? Colors.black : Colors.white,
+            ),
           ),
         ),
       ),
@@ -99,20 +102,20 @@ class _ArrowPadState extends State<ArrowPad> {
         children: [
           const SizedBox(),
           ArrowButton(
-            icon: Icons.arrow_upward,
+            text: '🠉',
             onPressed: () => _handleArrowButtonPress('Up'),
           ),
           const SizedBox(),
           ArrowButton(
-            icon: Icons.arrow_back,
+            text: '🠈',
             onPressed: () => _handleArrowButtonPress('Left'),
           ),
           ArrowButton(
-            icon: Icons.arrow_downward,
+            text: '🠋',
             onPressed: () => _handleArrowButtonPress('Down'),
           ),
           ArrowButton(
-            icon: Icons.arrow_forward,
+            text: '🠊',
             onPressed: () => _handleArrowButtonPress('Right'),
           ),
         ],

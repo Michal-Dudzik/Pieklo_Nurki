@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Utils {
@@ -21,28 +22,62 @@ class Utils {
     }
   }
 
-  static String mapDirectionsToArrows(List<String> directions) {
-    List<String> arrowStrings = [];
-    for (String arrow in directions) {
+  static List<Widget> mapDirectionsToArrows(List<String> directions, int streak) {
+    List<Widget> arrowWidgets = [];
+    for (int i = 0; i < directions.length; i++) {
+      String arrow = directions[i];
+      Color color = i < streak ? Color(0xffffe80a): Colors.white;
       switch (arrow) {
         case 'Up':
-          arrowStrings.add('↑');
+          arrowWidgets.add(Text(
+            '🠉',
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontFamily: 'Symbola',
+            ),
+          ));
           break;
         case 'Down':
-          arrowStrings.add('↓');
+          arrowWidgets.add(Text(
+            '🠋',
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontFamily: 'Symbola',
+            ),
+          ));
           break;
         case 'Left':
-          arrowStrings.add('←');
+          arrowWidgets.add(Text(
+            '🠈',
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontFamily: 'Symbola',
+            ),
+          ));
           break;
         case 'Right':
-          arrowStrings.add('→');
+          arrowWidgets.add(Text(
+            '🠊',
+            style: TextStyle(
+              color: color,
+              fontSize: 24,
+              fontFamily: 'Symbola',
+            ),
+          ));
           break;
         default:
           break;
       }
     }
-    return arrowStrings.join(' ');
+    return arrowWidgets;
   }
+
+
+
+
 
 }
 
