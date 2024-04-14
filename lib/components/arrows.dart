@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ArrowButton extends StatefulWidget {
-  final String text; // Change IconData to String for arrow text
+  final String text;
   final VoidCallback onPressed;
   final double size;
   final Color color;
@@ -57,7 +57,7 @@ class _ArrowButtonState extends State<ArrowButton> {
             widget.text,
             style: TextStyle(
               fontFamily: 'Symbola',
-              fontSize: widget.size, // Adjust size if needed
+              fontSize: widget.size,
               color: _isPressed ? Colors.black : Colors.white,
             ),
           ),

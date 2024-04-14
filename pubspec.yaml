@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   video_player: ^2.8.5
   webview_flutter: ^4.7.0
-  cupertino_icons: ^1.0.2
   expandable_menu: ^0.0.5
   flutter_svg_provider: ^1.0.7
   scrollable: ^1.0.5
@@ -22,6 +21,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/small-logo.png"
+  min_sdk_android: 21
+
+flutter_native_splash:
+    color: "#000000"
+    image: assets/images/small-logo.png
+    android: true
+    ios: true
 
 flutter:
 
@@ -38,7 +51,6 @@ flutter:
     - assets/stratagems/Robotics_Workshop/
     - assets/images/
     - assets/intro_cropped.mp4
-    - assets/fonts/Chakra_Petch/
 
   fonts:
     - family: ChakraPetch
@@ -56,3 +68,4 @@ flutter:
       fonts:
         - asset: assets/fonts/Symbola.ttf
           weight: 400
+

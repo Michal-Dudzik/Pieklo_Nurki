@@ -31,8 +31,14 @@ class _CompanionScreenState extends State<CompanionScreen> {
           },
         ),
       )
+      ..clearCache()
       ..loadRequest(Uri.parse('https://helldiverscompanion.com/'));
   }
+
+  void clearCache() async {
+    await _controller.clearCache();
+  }
+
 
   @override
   Widget build(BuildContext context) {
