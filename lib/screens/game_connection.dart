@@ -1,7 +1,11 @@
+import 'dart:collection';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:pieklo_nurki/components/animated_toggle.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
+import 'package:pieklo_nurki/components/connection_pad.dart';
+import 'package:pieklo_nurki/utility/app_state.dart';
+import 'package:provider/provider.dart';
 
 class GameConnection extends StatefulWidget {
   const GameConnection({Key? key}) : super(key: key);
@@ -11,7 +15,8 @@ class GameConnection extends StatefulWidget {
 }
 
 class _GameConnectionState extends State<GameConnection> {
-  bool _switchValue = false;
+  // bool _switchValue = false;
+  // final Queue<String> _pressedArrowsQueue = Queue<String>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,10 @@ class _GameConnectionState extends State<GameConnection> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Expanded(
+                        child: ConnectionPad(),
+                      ),
+                      const SizedBox(width: 10),
                       Container(
                         width: 40.0,
                         height: 40.0,
@@ -49,10 +58,6 @@ class _GameConnectionState extends State<GameConnection> {
                           icon: const Icon(Icons.arrow_back),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: ConnectionStatus(switchValue: _switchValue),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -64,15 +69,31 @@ class _GameConnectionState extends State<GameConnection> {
                         Container(
                           width: MediaQuery.of(context).size.width / 3,
                           color: Colors.black.withOpacity(.4),
-                          child: Switch(
-                            value: _switchValue,
-                            onChanged: (value) {
-                              setState(() {
-                                _switchValue = value;
-                              });
-                            },
-                            activeColor: Colors.yellow,
-                            activeTrackColor: Colors.yellow,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Activate Stratagems Console',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                AnimatedToggle(
+                                  activation:
+                                      context.watch<AppState>().switchValue,
+                                  onChanged: (value) {
+                                    context.read<AppState>().switchValue =
+                                        value;
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -85,7 +106,9 @@ class _GameConnectionState extends State<GameConnection> {
                                 child: Center(
                                   child: ArrowPad(
                                     onArrowsPressed: (arrows) {
-                                      print(arrows);
+                                      context
+                                          .read<AppState>()
+                                          .addPressedArrow(arrows.last);
                                     },
                                   ),
                                 ),
@@ -101,40 +124,6 @@ class _GameConnectionState extends State<GameConnection> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ConnectionStatus extends StatelessWidget {
-  const ConnectionStatus({
-    Key? key,
-    required this.switchValue,
-  }) : super(key: key);
-
-  final bool switchValue;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      color: Colors.black.withOpacity(.4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Icon(
-            Icons.wifi,
-            color: switchValue ? Colors.green : Colors.red,
-          ),
-          SizedBox(width: 8),
-          Text(
-            switchValue ? 'Connected' : 'Disconnected',
-            style: TextStyle(
-              color: switchValue ? Colors.green : Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
       ),
     );
   }

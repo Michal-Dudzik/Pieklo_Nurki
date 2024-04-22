@@ -4,6 +4,8 @@ import 'package:pieklo_nurki/screens/companion_screen.dart';
 import 'package:pieklo_nurki/screens/settings_screen.dart';
 import 'package:pieklo_nurki/screens/game_connection.dart';
 import 'package:pieklo_nurki/screens/stratagems_screen.dart';
+import 'package:pieklo_nurki/utility/app_state.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
@@ -22,22 +24,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Piekło Nurki',
-      theme: ThemeData(
-        fontFamily: 'ChakraPetch',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: MaterialApp(
+        title: 'Piekło Nurki',
+        theme: ThemeData(
+          fontFamily: 'ChakraPetch',
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+          useMaterial3: true,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MyHomePage(),
+          '/game_connection': (context) => const GameConnection(),
+          '/stratagems_screen': (context) => const StratagemsScreen(),
+          '/settings_screen': (context) => const SettingsScreen(),
+          '/companion_screen': (context) => const CompanionScreen(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyHomePage(),
-        '/game_connection': (context) => const GameConnection(),
-        '/stratagems_screen': (context) => const StratagemsScreen(),
-        '/settings_screen': (context) => const SettingsScreen(),
-        '/companion_screen': (context) => const CompanionScreen(),
-      },
     );
   }
 }

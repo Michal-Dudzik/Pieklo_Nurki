@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Utils {
-
   static Future<List<Stratagem>> loadStratagems() async {
     try {
       String jsonString = await rootBundle.loadString('assets/stratagems.json');
@@ -21,11 +20,12 @@ class Utils {
     }
   }
 
-  static List<Widget> mapDirectionsToArrows(List<String> directions, int streak) {
+  static List<Widget> mapDirectionsToArrows(
+      List<String> directions, int streak) {
     List<Widget> arrowWidgets = [];
     for (int i = 0; i < directions.length; i++) {
       String arrow = directions[i];
-      Color color = i < streak ? const Color(0xffffe80a): Colors.white;
+      Color color = i < streak ? const Color(0xffffe80a) : Colors.white;
       switch (arrow) {
         case 'Up':
           arrowWidgets.add(Text(
@@ -73,13 +73,7 @@ class Utils {
     }
     return arrowWidgets;
   }
-
-
-
-
-
 }
-
 
 class Stratagem {
   final String name;
@@ -99,5 +93,4 @@ class Stratagem {
       arrowSet: List<String>.from(json['arrowSet']),
     );
   }
-
 }
