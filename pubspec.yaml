@@ -16,13 +16,14 @@ dependencies:
   flutter_svg_provider: ^1.0.7
   scrollable: ^1.0.5
   marquee_text: ^2.5.0+1
-
   flutter_svg: any
+  tcp_socket_connection: ^0.3.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  flutter_native_splash: ^2.4.0
+  flutter_native_splash: 2.3.11
   flutter_launcher_icons: ^0.13.1
 
 flutter_launcher_icons:

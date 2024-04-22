@@ -2,7 +2,6 @@ import 'package:expandable_menu/expandable_menu.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatelessWidget {
-
   const Menu({
     Key? key,
   }) : super(key: key);
@@ -29,7 +28,7 @@ class Menu extends StatelessWidget {
           IconButton(
             padding: const EdgeInsets.all(8),
             onPressed: () {
-              // Navigator.pushNamed(context, '/stratagems_selection_screen');
+              Navigator.pushNamed(context, '/game_connection');
             },
             icon: Image.asset('assets/images/danger_black.png'),
           ),

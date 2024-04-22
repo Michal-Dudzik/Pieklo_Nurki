@@ -39,7 +39,6 @@ class _CompanionScreenState extends State<CompanionScreen> {
     await _controller.clearCache();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,11 +53,11 @@ class _CompanionScreenState extends State<CompanionScreen> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Container(
-                    width: 40.0, // Adjust width as needed
-                    height: 120.0, // Adjust height as needed
+                    width: 40.0,
+                    height: 120.0,
                     decoration: BoxDecoration(
                       color: const Color(0xffffe80a),
-                      borderRadius: BorderRadius.circular(10.0), // Adjust the border radius for rounded corners
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: IconButton(
                       onPressed: () {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pieklo_nurki/screens/companion_screen.dart';
 import 'package:pieklo_nurki/screens/settings_screen.dart';
-import 'package:pieklo_nurki/screens/stratagem_selection_screen.dart';
+import 'package:pieklo_nurki/screens/game_connection.dart';
 import 'package:pieklo_nurki/screens/stratagems_screen.dart';
 import 'package:video_player/video_player.dart';
 
@@ -33,8 +33,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const MyHomePage(),
-        '/stratagem_selection_screen': (context) =>
-            const StratagemSelectionScreen(),
+        '/game_connection': (context) => const GameConnection(),
         '/stratagems_screen': (context) => const StratagemsScreen(),
         '/settings_screen': (context) => const SettingsScreen(),
         '/companion_screen': (context) => const CompanionScreen(),
