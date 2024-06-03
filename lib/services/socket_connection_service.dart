@@ -16,11 +16,9 @@ class SocketConnectionService extends ChangeNotifier {
     _socketConnection = TcpSocketConnection(ip, port);
 
     try {
-      print('Attempting to connect to $ip:$port');
-      final result =
-          await _socketConnection!.connect(5000, messageReceived, attempts: 3);
+      final result = await _socketConnection!
+          .connect(5000, welcomeMessageReceived, attempts: 3);
       if (result == null || !result) {
-        print('Failed to connect');
         _connected = false;
       } else {
         _connected = true;
@@ -31,12 +29,6 @@ class SocketConnectionService extends ChangeNotifier {
     } finally {
       _isConnecting = false;
       notifyListeners();
-    }
-
-    if (_connected) {
-      print('Connected to server');
-    } else {
-      print('Failed to connect to the server');
     }
   }
 
@@ -53,22 +45,14 @@ class SocketConnectionService extends ChangeNotifier {
     if (_connected && _socketConnection != null) {
       print('Sending command: $command');
       _socketConnection!.sendMessage(command);
-    } else {
-      print('Not connected to the server');
     }
   }
 
-  void messageReceived(String msg) {
-    print('Message received: $msg');
+  void welcomeMessageReceived(String msg) {
     if (msg == "Connection established") {
       print('Server connection confirmed');
       _connected = true;
       notifyListeners();
-    } else {
-      // Handle other messages
-    }
-    if (_connected && _socketConnection != null) {
-      _socketConnection!.sendMessage("MessageIsReceived :D ");
     }
   }
 
