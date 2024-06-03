@@ -1,25 +1,49 @@
 import 'dart:collection';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pieklo_nurki/components/animated_toggle.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
 import 'package:pieklo_nurki/components/connection_pad.dart';
-import 'package:pieklo_nurki/utility/app_state.dart';
-import 'package:provider/provider.dart';
+import 'package:pieklo_nurki/providers/providers.dart';
+import 'package:pieklo_nurki/services/socket_connection_service.dart';
 
-class GameConnection extends StatefulWidget {
+class GameConnection extends ConsumerStatefulWidget {
   const GameConnection({Key? key}) : super(key: key);
 
   @override
-  State<GameConnection> createState() => _GameConnectionState();
+  _GameConnectionState createState() => _GameConnectionState();
 }
 
-class _GameConnectionState extends State<GameConnection> {
-  // bool _switchValue = false;
-  // final Queue<String> _pressedArrowsQueue = Queue<String>();
+class _GameConnectionState extends ConsumerState<GameConnection> {
+  late final SocketConnectionService _socketService;
+
+  @override
+  void initState() {
+    super.initState();
+    _socketService = ref.read(socketConnectionProvider);
+  }
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<bool>(toggleProvider, (previous, next) {
+      if (_socketService.isConnected) {
+        _socketService.sendCommand('toggleState:$next');
+      } else {
+        print('Not connected to the server, cannot send toggle state');
+      }
+    });
+
+    ref.listen<Queue<String>>(pressedArrowsQueueProvider, (previous, next) {
+      if (_socketService.isConnected && next.isNotEmpty) {
+        final lastArrow = next.last;
+        _socketService.sendCommand('lastPressedArrow:$lastArrow');
+      } else {
+        print('Not connected to the server, cannot send last pressed arrow');
+      }
+    });
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -69,12 +93,12 @@ class _GameConnectionState extends State<GameConnection> {
                         Container(
                           width: MediaQuery.of(context).size.width / 3,
                           color: Colors.black.withOpacity(.4),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'Activate Stratagems Console',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -83,15 +107,8 @@ class _GameConnectionState extends State<GameConnection> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                AnimatedToggle(
-                                  activation:
-                                      context.watch<AppState>().switchValue,
-                                  onChanged: (value) {
-                                    context.read<AppState>().switchValue =
-                                        value;
-                                  },
-                                ),
+                                SizedBox(height: 10),
+                                AnimatedToggle(),
                               ],
                             ),
                           ),
@@ -104,13 +121,7 @@ class _GameConnectionState extends State<GameConnection> {
                               child: Container(
                                 color: Colors.black.withOpacity(.4),
                                 child: Center(
-                                  child: ArrowPad(
-                                    onArrowsPressed: (arrows) {
-                                      context
-                                          .read<AppState>()
-                                          .addPressedArrow(arrows.last);
-                                    },
-                                  ),
+                                  child: ArrowPad(),
                                 ),
                               ),
                             ),

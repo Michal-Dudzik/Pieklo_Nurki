@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pieklo_nurki/screens/companion_screen.dart';
-import 'package:pieklo_nurki/screens/settings_screen.dart';
 import 'package:pieklo_nurki/screens/game_connection.dart';
+import 'package:pieklo_nurki/screens/settings_screen.dart';
 import 'package:pieklo_nurki/screens/stratagems_screen.dart';
-import 'package:pieklo_nurki/utility/app_state.dart';
-import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 void main() {
@@ -15,7 +14,7 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
-    runApp(const MyApp());
+    runApp(const ProviderScope(child: MyApp()));
   });
 }
 
@@ -24,25 +23,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AppState(),
-      child: MaterialApp(
-        title: 'Piekło Nurki',
-        theme: ThemeData(
-          fontFamily: 'ChakraPetch',
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-          useMaterial3: true,
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => const MyHomePage(),
-          '/game_connection': (context) => const GameConnection(),
-          '/stratagems_screen': (context) => const StratagemsScreen(),
-          '/settings_screen': (context) => const SettingsScreen(),
-          '/companion_screen': (context) => const CompanionScreen(),
-        },
+    return MaterialApp(
+      title: 'Piekło Nurki',
+      theme: ThemeData(
+        fontFamily: 'ChakraPetch',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+        useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const MyHomePage(),
+        '/game_connection': (context) => const GameConnection(),
+        '/stratagems_screen': (context) => const StratagemsScreen(),
+        '/settings_screen': (context) => const SettingsScreen(),
+        '/companion_screen': (context) => const CompanionScreen(),
+      },
     );
   }
 }
@@ -62,6 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    _initializeVideoPlayer();
+  }
+
+  void _initializeVideoPlayer() {
     _controller = VideoPlayerController.asset('assets/intro_cropped.mp4')
       ..initialize().then((_) {
         setState(() {
@@ -69,11 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       });
     _controller.addListener(() {
-      if (_controller.value.isPlaying) {
-        if (_controller.value.position >= _controller.value.duration ||
-            _controller.value.position >= const Duration(seconds: 31)) {
-          Navigator.pushReplacementNamed(context, '/stratagems_screen');
-        }
+      if (_controller.value.isPlaying &&
+          (_controller.value.position >= _controller.value.duration ||
+              _controller.value.position >= const Duration(seconds: 31))) {
+        Navigator.pushReplacementNamed(context, '/stratagems_screen');
       }
     });
   }

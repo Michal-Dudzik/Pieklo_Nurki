@@ -1,11 +1,15 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CountdownTimer extends StatefulWidget {
   final bool successfulCall;
   final Function()? onCountdownComplete;
 
-  const CountdownTimer({Key? key, required this.successfulCall, this.onCountdownComplete}) : super(key: key);
+  const CountdownTimer(
+      {Key? key, required this.successfulCall, this.onCountdownComplete})
+      : super(key: key);
 
   @override
   _CountdownTimerState createState() => _CountdownTimerState();
@@ -30,6 +34,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   void _startTimer() {
     const oneSecond = Duration(seconds: 1);
     _timer = Timer.periodic(oneSecond, (timer) {
+      HapticFeedback.heavyImpact();
       setState(() {
         if (_counter > 0) {
           _counter--;
