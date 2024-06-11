@@ -29,18 +29,27 @@ class _GameConnectionState extends ConsumerState<GameConnection> {
   Widget build(BuildContext context) {
     ref.listen<bool>(toggleProvider, (previous, next) {
       if (_socketService.isConnected) {
-        _socketService.sendCommand(next as String);
+        final command = next ? 'T' : 'F';
+        _socketService.sendCommand(command);
       } else {
-        print('Not connected to the server, cannot send toggle state');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text(
+                  'Not connected to the server, cannot send toggle state')),
+        );
       }
     });
 
     ref.listen<Queue<String>>(pressedArrowsQueueProvider, (previous, next) {
       if (_socketService.isConnected && next.isNotEmpty) {
         final lastArrow = next.last;
-        _socketService.sendCommand(lastArrow);
+        _socketService.sendCommand(lastArrow[0]);
       } else {
-        print('Not connected to the server, cannot send last pressed arrow');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text(
+                  'Not connected to the server, cannot send last pressed arrow')),
+        );
       }
     });
 

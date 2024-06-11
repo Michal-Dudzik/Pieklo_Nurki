@@ -19,13 +19,6 @@ class Menu extends StatelessWidget {
         itemContainerColor: const Color(0xffffe80a),
         items: [
           IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              // Navigator.pushNamed(context, '/settings_screen');
-            },
-            icon: const Icon(Icons.settings, color: Colors.black),
-          ),
-          IconButton(
             padding: const EdgeInsets.all(8),
             onPressed: () {
               Navigator.pushNamed(context, '/game_connection');

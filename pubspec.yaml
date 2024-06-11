@@ -20,7 +20,7 @@ dependencies:
   tcp_socket_connection: ^0.3.1
   qr_code_scanner: ^1.0.1
   flutter_riverpod: ^2.5.1
-  riverpod_annotation: ^2.3.5
+  wakelock: ^0.6.2
 
 
 dev_dependencies:
@@ -29,8 +29,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 #  flutter_native_splash: 2.3.11
   flutter_launcher_icons: ^0.13.1
-  riverpod_generator: ^2.4.2
-  riverpod_lint: ^2.3.12
   build_runner: ^2.4.10
   custom_lint: ^0.6.4
 

@@ -6,6 +6,7 @@ import 'package:pieklo_nurki/screens/game_connection.dart';
 import 'package:pieklo_nurki/screens/settings_screen.dart';
 import 'package:pieklo_nurki/screens/stratagems_screen.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,8 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
-  ]).then((_) {
+  ]);
+  Wakelock.enable().then((_) {
     runApp(const ProviderScope(child: MyApp()));
   });
 }
