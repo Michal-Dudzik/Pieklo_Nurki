@@ -1,8 +1,8 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:marquee_text/marquee_direction.dart';
 import 'package:marquee_text/marquee_text.dart';
-
 
 class Tips extends StatelessWidget {
   final List<String> tips = [
@@ -46,22 +46,21 @@ class Tips extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Expanded(
-                    child: MarqueeText(
-                      text: TextSpan(
-                        text: tips.join('   |   '),
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: MarqueeText(
+                    text: TextSpan(
+                      text: tips.join('   |   '),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      speed: 20,
-                      alwaysScroll: true,
-                      textDirection: TextDirection.rtl,
-                      marqueeDirection: MarqueeDirection.rtl,
-                      textAlign: TextAlign.start,
-                    )
-                  ),
+                    ),
+                    speed: 20,
+                    alwaysScroll: true,
+                    textDirection: TextDirection.rtl,
+                    marqueeDirection: MarqueeDirection.rtl,
+                    textAlign: TextAlign.start,
+                  )),
                 ],
               ),
             ),

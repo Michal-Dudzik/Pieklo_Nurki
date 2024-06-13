@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   video_player: ^2.8.5
   webview_flutter: ^4.7.0
-  expandable_menu: ^0.0.5
   flutter_svg_provider: ^1.0.7
   scrollable: ^1.0.5
   marquee_text: ^2.5.0+1
@@ -21,7 +20,7 @@ dependencies:
   qr_code_scanner: ^1.0.1
   flutter_riverpod: ^2.5.1
   wakelock: ^0.6.2
-
+  soundpool: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +58,7 @@ flutter:
     - assets/stratagems/Robotics_Workshop/
     - assets/images/
     - assets/intro_cropped.mp4
+    - assets/click_sound.mp3
 
   fonts:
     - family: ChakraPetch

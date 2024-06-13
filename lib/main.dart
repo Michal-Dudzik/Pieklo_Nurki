@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pieklo_nurki/screens/companion_screen.dart';
 import 'package:pieklo_nurki/screens/game_connection.dart';
-import 'package:pieklo_nurki/screens/settings_screen.dart';
 import 'package:pieklo_nurki/screens/stratagems_screen.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
@@ -38,7 +37,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => const MyHomePage(),
         '/game_connection': (context) => const GameConnection(),
         '/stratagems_screen': (context) => const StratagemsScreen(),
-        '/settings_screen': (context) => const SettingsScreen(),
         '/companion_screen': (context) => const CompanionScreen(),
       },
     );

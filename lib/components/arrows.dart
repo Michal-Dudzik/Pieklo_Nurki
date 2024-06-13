@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pieklo_nurki/providers/providers.dart';
+import 'package:soundpool/soundpool.dart';
 
 class ArrowButton extends StatefulWidget {
   final String text;
@@ -79,8 +81,37 @@ class ArrowPad extends ConsumerStatefulWidget {
 }
 
 class _ArrowPadState extends ConsumerState<ArrowPad> {
-  void _handleArrowButtonPress(String direction) {
+  late Soundpool _soundpool;
+  late int _soundId;
+  late Completer<int> _soundIdCompleter;
+
+  @override
+  void initState() {
+    super.initState();
+    _initSoundpool();
+  }
+
+  void _initSoundpool() {
+    _soundpool = Soundpool();
+    _soundIdCompleter = Completer<int>();
+    _loadSound();
+  }
+
+  Future<void> _loadSound() async {
+    var asset = await rootBundle.load('assets/click_sound.mp3');
+    _soundId = await _soundpool.load(asset);
+    _soundIdCompleter.complete(_soundId);
+  }
+
+  @override
+  void dispose() {
+    _soundpool.release();
+    super.dispose();
+  }
+
+  Future<void> _handleArrowButtonPress(String direction) async {
     HapticFeedback.heavyImpact();
+    await _playSound();
 
     final queueNotifier = ref.read(pressedArrowsQueueProvider.notifier);
     final pressedArrowsQueue = Queue<String>.from(queueNotifier.state);
@@ -93,6 +124,11 @@ class _ArrowPadState extends ConsumerState<ArrowPad> {
     queueNotifier.state = pressedArrowsQueue;
 
     _checkArrowSequence(ref, pressedArrowsQueue);
+  }
+
+  Future<void> _playSound() async {
+    final soundId = await _soundIdCompleter.future;
+    _soundpool.play(soundId);
   }
 
   void _checkArrowSequence(WidgetRef ref, Queue<String> pressedArrowsQueue) {

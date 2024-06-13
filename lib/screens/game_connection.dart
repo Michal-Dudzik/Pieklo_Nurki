@@ -7,49 +7,26 @@ import 'package:pieklo_nurki/components/animated_toggle.dart';
 import 'package:pieklo_nurki/components/arrows.dart';
 import 'package:pieklo_nurki/components/connection_pad.dart';
 import 'package:pieklo_nurki/providers/providers.dart';
-import 'package:pieklo_nurki/services/socket_connection_service.dart';
 
-class GameConnection extends ConsumerStatefulWidget {
+class GameConnection extends ConsumerWidget {
   const GameConnection({Key? key}) : super(key: key);
 
   @override
-  _GameConnectionState createState() => _GameConnectionState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final socketService = ref.watch(socketConnectionProvider);
+    final bool isConnected = socketService.isConnected;
 
-class _GameConnectionState extends ConsumerState<GameConnection> {
-  late final SocketConnectionService _socketService;
-
-  @override
-  void initState() {
-    super.initState();
-    _socketService = ref.read(socketConnectionProvider);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     ref.listen<bool>(toggleProvider, (previous, next) {
-      if (_socketService.isConnected) {
+      if (isConnected) {
         final command = next ? 'T' : 'F';
-        _socketService.sendCommand(command);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text(
-                  'Not connected to the server, cannot send toggle state')),
-        );
+        socketService.sendCommand(command);
       }
     });
 
     ref.listen<Queue<String>>(pressedArrowsQueueProvider, (previous, next) {
-      if (_socketService.isConnected && next.isNotEmpty) {
+      if (isConnected && next.isNotEmpty) {
         final lastArrow = next.last;
-        _socketService.sendCommand(lastArrow[0]);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text(
-                  'Not connected to the server, cannot send last pressed arrow')),
-        );
+        socketService.sendCommand(lastArrow[0]);
       }
     });
 
@@ -77,18 +54,18 @@ class _GameConnectionState extends ConsumerState<GameConnection> {
                       ),
                       const SizedBox(width: 10),
                       Container(
-                        width: 40.0,
-                        height: 40.0,
+                        width: 50.0,
+                        height: 50.0,
                         decoration: BoxDecoration(
                           color: const Color(0xffffe80a),
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(0.0),
                         ),
                         child: IconButton(
                           onPressed: () {
                             Navigator.pop(context);
                           },
                           color: Colors.black,
-                          icon: const Icon(Icons.arrow_back),
+                          icon: const Icon(Icons.arrow_back, size: 30.0),
                         ),
                       ),
                     ],

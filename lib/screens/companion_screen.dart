@@ -51,13 +51,12 @@ class _CompanionScreenState extends State<CompanionScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.topLeft,
                   child: Container(
-                    width: 40.0,
-                    height: 120.0,
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffe80a),
-                      borderRadius: BorderRadius.circular(10.0),
+                    width: 50.0,
+                    height: 50.0,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffe80a),
                     ),
                     child: IconButton(
                       onPressed: () {
