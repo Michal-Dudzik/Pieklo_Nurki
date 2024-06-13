@@ -3,7 +3,7 @@
 Pieklo nurki do pieklo podow!
 
 # Overview
-Piekło Nurki Mobile App is a mobile application developed using Flutter for the glory of the super earth.
+Piekło Nurki is a mobile application developed using Flutter for the glory of the super earth.
 
 # Features
 ### Summon stratagems wherever you are!
