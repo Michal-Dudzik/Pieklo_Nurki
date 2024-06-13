@@ -2,7 +2,7 @@
 
 Pieklo nurki do pieklo podow!
 
-# Overiview
+# Overview
 Piekło Nurki Mobile App is a mobile application developed using Flutter for the glory of the super earth.
 
 # Features
