@@ -18,7 +18,7 @@ class GameConnection extends ConsumerWidget {
 
     ref.listen<bool>(toggleProvider, (previous, next) {
       if (isConnected) {
-        final command = next ? 'T' : 'F';
+        final command = next ? 'TRUE' : 'FALSE';
         socketService.sendCommand(command);
       }
     });
@@ -26,7 +26,7 @@ class GameConnection extends ConsumerWidget {
     ref.listen<Queue<String>>(pressedArrowsQueueProvider, (previous, next) {
       if (isConnected && next.isNotEmpty) {
         final lastArrow = next.last;
-        socketService.sendCommand(lastArrow[0]);
+        socketService.sendCommand(lastArrow.toUpperCase());
       }
     });
 

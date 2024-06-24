@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'credits.dart';
+
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
 
@@ -94,6 +96,14 @@ class _MenuState extends State<Menu> with SingleTickerProviderStateMixin {
             Navigator.pushNamed(context, '/companion_screen');
           },
         ),
+        _buildMenuItem(Icons.group, "CREDITS", () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const CreditsDialog();
+            },
+          );
+        }),
       ],
     );
   }

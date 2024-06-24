@@ -16,8 +16,8 @@ class SocketConnectionService extends ChangeNotifier {
     _socketConnection = TcpSocketConnection(ip, port);
 
     try {
-      final result = await _socketConnection!
-          .connect(5000, welcomeMessageReceived, attempts: 3);
+      final result =
+          await _socketConnection!.connect(5000, _handleMessage, attempts: 3);
       if (result == null || !result) {
         _connected = false;
       } else {
@@ -37,22 +37,21 @@ class SocketConnectionService extends ChangeNotifier {
       _socketConnection!.disconnect();
       _connected = false;
       notifyListeners();
-      print('Disconnected from server');
     }
   }
 
   void sendCommand(String command) {
     if (_connected && _socketConnection != null) {
-      print('Sending command: $command');
       _socketConnection!.sendMessage(command);
     }
   }
 
-  void welcomeMessageReceived(String msg) {
+  void _handleMessage(String msg) {
     if (msg == "Connection established") {
-      print('Server connection confirmed');
       _connected = true;
       notifyListeners();
+    } else if (msg == "STOP") {
+      disconnect();
     }
   }
 
